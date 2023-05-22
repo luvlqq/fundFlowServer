@@ -8,6 +8,8 @@ import { TransfersModule } from './transfers/transfers.module';
 import { ExchangesModule } from './exchanges/exchanges.module';
 import { MessagesModule } from './messages/messages.module';
 import { HistoriesModule } from './histories/histories.module';
+import { PrismaService } from '../prisma/prisma.service';
+import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
   imports: [
@@ -18,8 +20,9 @@ import { HistoriesModule } from './histories/histories.module';
     ExchangesModule,
     MessagesModule,
     HistoriesModule,
+    PrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
