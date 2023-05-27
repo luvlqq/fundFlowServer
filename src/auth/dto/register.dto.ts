@@ -7,7 +7,7 @@ import {
   userLastName,
 } from './helper';
 
-export class AuthDto {
+export class RegisterDto {
   @IsNotEmpty({ message: isNotEmpty })
   @IsString()
   @IsEmail()
