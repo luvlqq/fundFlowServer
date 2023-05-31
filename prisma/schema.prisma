@@ -11,17 +11,17 @@ datasource db {
 }
 
 model User {
-  id            Int        @id @default(autoincrement())
-  email         String     @unique
-  hashPassword  String
-  createdAt     DateTime   @default(now())
-  firstName     String
-  lastName      String
-  avatarImg     String
-  accounts      Accounts[]
-  reviews       Reviews[]
-  isVerify      Boolean
-  accountStatus String
+  id             Int        @id @default(autoincrement())
+  email          String     @unique
+  hashedPassword String
+  createdAt      DateTime   @default(now())
+  firstName      String
+  lastName       String
+  avatarImg      String?
+  accounts       Accounts[]
+  reviews        Reviews[]
+  isVerify       Boolean?
+  accountStatus  String?
 }
 
 model Accounts {

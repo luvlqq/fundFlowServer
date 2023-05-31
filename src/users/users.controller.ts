@@ -6,7 +6,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get(':id')
-  getUserInfo() {}
+  getUserInfo(id: number) {
+    return this.usersService.getUserInfo(id);
+  }
 
   @Patch(':id')
   changeUserInfo() {}
