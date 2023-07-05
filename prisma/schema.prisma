@@ -11,39 +11,70 @@ datasource db {
 }
 
 model User {
-  id             Int        @id @default(autoincrement())
-  email          String     @unique
-  hashedPassword String
-  createdAt      DateTime   @default(now())
-  firstName      String
-  lastName       String
-  avatarImg      String?
-  accounts       Accounts[]
-  reviews        Reviews[]
-  isVerify       Boolean?
-  accountStatus  String?
+  id                Int            @id @default(autoincrement())
+  email             String         @unique
+  hashedPassword    String
+  hashRt            String
+  createdAt         DateTime       @default(now())
+  firstName         String
+  lastName          String
+  avatarImg         String?
+  accounts          Accounts[]
+  reviews           Reviews[]
+  sentTransfers     Transactions[] @relation("Sender")
+  receivedTransfers Transactions[] @relation("Recipient")
+  operDeals         OpenDeals[]
+  isVerify          Boolean?
+  accountStatus     String?
 }
 
 model Accounts {
   id         Int        @id @default(autoincrement())
   user       User       @relation(fields: [userId], references: [id])
   userId     Int
-  currencyId Currencies @relation(fields: [currency], references: [id])
+  currencyId Currencies @relation("Currency", fields: [currency], references: [id])
   currency   Int
   balance    Int
 }
 
+model Transactions {
+  id         Int        @id @default(autoincrement())
+  sender     User       @relation("Sender", fields: [senderId], references: [id])
+  senderId   Int
+  reciper    User       @relation("Recipient", fields: [reciperId], references: [id])
+  reciperId  Int
+  currency   Currencies @relation("Transactions", fields: [currencyId], references: [id])
+  currencyId Int
+  amount     Int
+  createdAt  DateTime   @default(now())
+  status     String
+  hash       String
+}
+
+model OpenDeals {
+  id               Int        @id @default(autoincrement())
+  dealer           User       @relation(fields: [dealerId], references: [id])
+  dealerId         Int
+  currencyToSell   Currencies @relation("currencyToSell", fields: [currencyToSellId], references: [id])
+  currencyToSellId Int
+  currencyToBuy    Currencies @relation("currencyToBuy", fields: [currencyToBuyId], references: [id])
+  currencyToBuyId  Int
+}
+
 model Currencies {
-  id            Int        @id @default(autoincrement())
-  name          String
-  symbol        String
-  currToAccount Accounts[]
+  id             Int            @id @default(autoincrement())
+  name           String
+  symbol         String
+  currToAccount  Accounts[]     @relation("Currency")
+  transactions   Transactions[] @relation("Transactions")
+  currencyToSell OpenDeals[]    @relation("currencyToSell")
+  currencyToBuy  OpenDeals[]    @relation("currencyToBuy")
 }
 model Reviews {
-  id           Int      @id @default(autoincrement())
-  user         User     @relation(fields: [userId], references: [id])
-  userId       Int
-  text         String
-  rating       Int
-  dateOfCreate DateTime
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  text      String
+  rating    Int
+  createdAt DateTime @default(now())
 }
