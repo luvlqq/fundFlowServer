@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 import { AuthRepository } from './auth.repository';
-import { Constants } from '../../common/constants';
+import { Constants } from './constants';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
