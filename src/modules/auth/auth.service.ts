@@ -4,10 +4,9 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import { AuthRepository } from './auth.repository';
-import { Constants } from '../../common/constants';
+import { Constants } from './constants';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { JwtTokensService } from './jwt.token.service';
@@ -16,7 +15,6 @@ import { Response } from 'express';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly prisma: PrismaService,
     private readonly repository: AuthRepository,
     private readonly jwtTokenService: JwtTokensService,
   ) {}

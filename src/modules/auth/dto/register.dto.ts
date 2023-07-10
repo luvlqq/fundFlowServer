@@ -1,9 +1,11 @@
 import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
+import { toLowerCaseTransform } from '../../../common/decorators/class-validator';
 
 export class RegisterDto {
   @IsNotEmpty()
   @IsString()
   @IsEmail()
+  @toLowerCaseTransform()
   email: string;
 
   @IsNotEmpty()
