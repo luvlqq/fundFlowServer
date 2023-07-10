@@ -35,9 +35,9 @@ model Accounts {
   accountName String
   currencyId  Currencies     @relation("Currency", fields: [currency], references: [id])
   currency    Int
-  balance     Float
+  balance     Float          @default(0)
   histoty     History[]
-  transaction Transactions[] @relation("AccountTransactions")
+  transaction Transactions[] @relation("Accounttransactions")
 }
 
 model History {
@@ -48,7 +48,7 @@ model History {
 
 model Transactions {
   id         Int        @id @default(autoincrement())
-  account    Accounts   @relation("AccountTransactions", fields: [accountId], references: [id])
+  account    Accounts   @relation("Accounttransactions", fields: [accountId], references: [id])
   accountId  Int
   sender     User       @relation("Sender", fields: [senderId], references: [id])
   senderId   Int
@@ -66,9 +66,9 @@ model OpenDeals {
   id               Int        @id @default(autoincrement())
   dealer           User       @relation(fields: [dealerId], references: [id])
   dealerId         Int
-  currencyToSell   Currencies @relation("currencyToSell", fields: [currencyToSellId], references: [id])
+  currencyToSell   Currencies @relation("currencytosell", fields: [currencyToSellId], references: [id])
   currencyToSellId Int
-  currencyToBuy    Currencies @relation("currencyToBuy", fields: [currencyToBuyId], references: [id])
+  currencyToBuy    Currencies @relation("currencytobuy", fields: [currencyToBuyId], references: [id])
   currencyToBuyId  Int
 }
 
@@ -78,8 +78,8 @@ model Currencies {
   symbol         String
   currToAccount  Accounts[]     @relation("Currency")
   transactions   Transactions[] @relation("Transactions")
-  currencyToSell OpenDeals[]    @relation("currencyToSell")
-  currencyToBuy  OpenDeals[]    @relation("currencyToBuy")
+  currencyToSell OpenDeals[]    @relation("currencytosell")
+  currencyToBuy  OpenDeals[]    @relation("currencytobuy")
 }
 model Reviews {
   id        Int      @id @default(autoincrement())
