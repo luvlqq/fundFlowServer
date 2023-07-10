@@ -20,7 +20,8 @@ model User {
   lastName          String
   avatarImg         String?
   accounts          Accounts[]
-  reviews           Reviews[]
+  receivedReviews   Reviews[]      @relation("receivedReviews")
+  givenReviews      Reviews[]      @relation("givenReviews")
   sentTransfers     Transactions[] @relation("Sender")
   receivedTransfers Transactions[] @relation("Recipient")
   operDeals         OpenDeals[]
@@ -82,10 +83,12 @@ model Currencies {
   currencyToBuy  OpenDeals[]    @relation("currencytobuy")
 }
 model Reviews {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  text      String
-  rating    Int
-  createdAt DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  user          User     @relation("receivedReviews", fields: [reviewSender], references: [id])
+  reviewSender  Int
+  targetUser    User     @relation("givenReviews", fields: [reviewReciper], references: [id])
+  reviewReciper Int
+  text          String
+  rating        Int
+  createdAt     DateTime @default(now())
 }
