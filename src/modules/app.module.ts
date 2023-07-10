@@ -13,6 +13,7 @@ import { AtGuard } from './auth/guards';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import configuration from '../config/configuration';
+import { MailerModule } from './mailer/mailer.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import configuration from '../config/configuration';
     TransfersModule,
     ExchangesModule,
     MessagesModule,
+    MailerModule,
     HistoriesModule,
     PrismaModule,
     ConfigModule.forRoot({
